@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CTI Security Intelligence Platform</title>
+<link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark">CTI</span>
+    <div class="brand-text">
+      <h1>منصة استخبارات التهديدات الأمنية</h1>
+      <p class="sub">Cyber Threat Intelligence · NER · MITRE ATT&amp;CK · STIX 2.1</p>
+    </div>
+  </div>
+  <div class="status" id="apiStatus"><span class="dot"></span> جارٍ الاتصال</div>
+</header>
+
+<nav class="tabs" id="tabs">
+  <button data-tab="dashboard" class="tab active">لوحة المقاييس</button>
+  <button data-tab="extract" class="tab">محرك الاستخراج</button>
+  <button data-tab="mitre" class="tab">فهرس MITRE</button>
+  <button data-tab="enrich" class="tab">فحص السمعة</button>
+</nav>
+
+<main class="content">
+
+  <!-- ===================== Dashboard ===================== -->
+  <section id="tab-dashboard" class="tabpage active">
+    <div class="section-head">
+      <h2>تقييم النموذج وخط الإنتاج</h2>
+      <span id="trainedAt" class="muted"></span>
+    </div>
+
+    <div class="kpis" id="kpis">
+      <div class="kpi"><span class="kpi-val" id="kpiMacroF1">—</span><span class="kpi-lbl">F1 الوسطي (Macro)</span></div>
+      <div class="kpi"><span class="kpi-val" id="kpiMacroP">—</span><span class="kpi-lbl">Precision</span></div>
+      <div class="kpi"><span class="kpi-val" id="kpiMacroR">—</span><span class="kpi-lbl">Recall</span></div>
+      <div class="kpi"><span class="kpi-val" id="kpiAcc">—</span><span class="kpi-lbl">Accuracy</span></div>
+      <div class="kpi accent"><span class="kpi-val" id="kpiPipeF1">—</span><span class="kpi-lbl">F1 خط الإنتاج</span></div>
+    </div>
+
+    <div class="grid two">
+      <div class="panel">
+        <h3>خط الإنتاج الكلي حسب النوع (regex + NER + قواميس)</h3>
+        <table class="metric-table" id="pipeTable">
+          <thead><tr><th>النوع</th><th>Precision</th><th>Recall</th><th>F1</th><th>الدعم</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="panel">
+        <h3>مصفوفة الارتباك الرمزية (Token)</h3>
+        <div class="cm-wrapper" id="confusionMatrix"></div>
+      </div>
+    </div>
+
+    <div class="grid two">
+      <div class="panel">
+        <h3>مقاييس النطاقات (Span)</h3>
+        <table class="metric-table" id="spanTable">
+          <thead><tr><th>النوع</th><th>Precision</th><th>Recall</th><th>F1</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="panel">
+        <h3>تفاصيل النموذج ومجموعة البيانات</h3>
+        <dl class="facts" id="modelFacts"></dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== Extract ===================== -->
+  <section id="tab-extract" class="tabpage">
+    <div class="section-head">
+      <h2>تحليل نص أو ملف تقرير CTI</h2>
+      <button class="btn ghost" id="loadSample">استخدم عينة جاهزة</button>
+    </div>
+
+    <div class="extractor-row">
+      <textarea id="inputText" rows="6" placeholder="الصق نص تقرير CTI (عربي أو إنجليزي): برمجيات خبيثة، عناوين، نطاقات، تقنيات، مجموعات، ثغرات..."></textarea>
+      <div class="file-zone">
+        <input type="file" id="fileInput" accept=".txt,.log,.json,.jsonl,.pdf" hidden />
+        <label for="fileInput" class="btn">رفع PDF / TXT / Logs</label>
+        <span id="fileName" class="muted"></span>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn primary" id="analyzeBtn">تحليل</button>
+      <button class="btn ghost hidden" id="stixBtn">عرض حزمة STIX 2.1</button>
+    </div>
+
+    <div id="resultBox" class="hidden">
+      <div class="summary-strip" id="summaryStrip"></div>
+
+      <div class="grid two">
+        <div class="panel">
+          <h3>الكيانات المكتشفة</h3>
+          <div id="entityList" class="entity-list"></div>
+        </div>
+        <div class="panel">
+          <h3>الرسم البياني المعرفي</h3>
+          <svg id="graphSvg" viewBox="0 0 760 520"></svg>
+          <div class="legend" id="legend"></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>ارتباطات MITRE ATT&amp;CK</h3>
+        <div id="mitreChips" class="chips"></div>
+      </div>
+
+      <div class="panel hidden" id="stixPanel">
+        <h3>حزمة STIX 2.1</h3>
+        <pre id="stixJson" class="code"></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== MITRE ===================== -->
+  <section id="tab-mitre" class="tabpage">
+    <div class="section-head">
+      <h2>فهرس تقنيات MITRE ATT&amp;CK</h2>
+      <input id="mitreSearch" class="search" placeholder="ابحث عن تقنية (Injection, Phishing, Credential...)" />
+    </div>
+    <div class="panel">
+      <table class="metric-table" id="mitreTable">
+        <thead><tr><th>المعرّف</th><th>الاسم</th><th>التكتيكات</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ===================== Enrich ===================== -->
+  <section id="tab-enrich" class="tabpage">
+    <div class="section-head">
+      <h2>فحص سمعة مؤشر (سجل/نطاق/رابط/تجزئة)</h2>
+    </div>
+    <div class="enrich-row">
+      <input id="enrichType" class="search" value="IP" list="iocTypes" />
+      <datalist id="iocTypes">
+        <option value="IP"></option><option value="DOMAIN"></option>
+        <option value="URL"></option><option value="EMAIL"></option>
+        <option value="HASH_SHA256"></option><option value="HASH_SHA1"></option><option value="HASH_MD5"></option>
+      </datalist>
+      <input id="enrichValue" class="search" placeholder="القيمة المراد فحصها" />
+      <button class="btn primary" id="enrichBtn">فحص</button>
+    </div>
+    <div class="panel" id="enrichResult"></div>
+  </section>
+</main>
+
+<footer class="foot">CTI Security Intelligence Platform · FastAPI + SequenceTagger + STIX 2.1</footer>
+<script src="assets/app.js"></script>
+</body>
+</html>
