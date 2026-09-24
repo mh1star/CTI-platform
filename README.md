@@ -1,5 +1,6 @@
 # CTI-platform
-إليك وصفاً متكاملاً واحترافياً بصيغة Markdown (`README.md`) باللغة الإنجليزية لوصف المنصة على جيت هوب، مع تفصيل **طريقة التثبيت وأوامر التشغيل** بشكل واضح تماماً كما طلبت:
+<img width="1265" height="575" alt="Screenshot 2026-09-24 032742" src="https://github.com/user-attachments/assets/c08eb47b-9df7-4b7b-a235-89f53ea5e82f" />
+
 
 ```markdown
 # CTI Security Intelligence Platform
