@@ -1,8 +1,3 @@
-# CTI-platform
-<img width="1265" height="575" alt="Screenshot 2026-09-24 032742" src="https://github.com/user-attachments/assets/c08eb47b-9df7-4b7b-a235-89f53ea5e82f" />
-
-
-```markdown
 # CTI Security Intelligence Platform
 
 A standalone and local-first intelligence platform designed to extract, enrich, and map Indicators of Compromise (IoCs) from unstructured Cyber Threat Intelligence (CTI) reports (Arabic/English). It features a trainable Conditional Random Fields (CRF) NER model, MITRE ATT&CK integration, STIX 2.1 exporting, and a dark CAD-styled Arabic web dashboard.
@@ -11,12 +6,12 @@ A standalone and local-first intelligence platform designed to extract, enrich, 
 
 ## 🚀 Key Features
 
-- **Advanced NER Engine:** Powered by Conditional Random Fields (`sklearn-crfsuite`/lbfgs + Viterbi) combined with intelligence dictionaries and MITRE expressions.
-- **Threat Enrichment:** Integrates with VirusTotal, AbuseIPDB, and AlienVault OTX, alongside a built-in offline fallback intelligence database.
-- **MITRE ATT&CK Mapping:** Automatic indexing and mapping of attack techniques and tags.
-- **Knowledge Graph Generation:** Visualizes relationships and co-occurrences between extracted entities (`co-occur`, `exploits`, `maps_to`).
-- **STIX 2.1 Export:** Generates standardized STIX bundles (`indicators`, `malware`, `threat-actor`, `attack-pattern`).
-- **Modern Web Dashboard:** A responsive dark-themed RTL Arabic dashboard featuring live extraction, evaluation metrics, and system health status.
+* **Advanced NER Engine:** Powered by Conditional Random Fields (`sklearn-crfsuite`/lbfgs + Viterbi) combined with intelligence dictionaries and MITRE expressions.
+* **Threat Enrichment:** Integrates with VirusTotal, AbuseIPDB, and AlienVault OTX, alongside a built-in offline fallback intelligence database.
+* **MITRE ATT&CK Mapping:** Automatic indexing and mapping of attack techniques and tags.
+* **Knowledge Graph Generation:** Visualizes relationships and co-occurrences between extracted entities (`co-occur`, `exploits`, `maps_to`).
+* **STIX 2.1 Export:** Generates standardized STIX bundles (`indicators`, `malware`, `threat-actor`, `attack-pattern`).
+* **Modern Web Dashboard:** A responsive dark-themed RTL Arabic dashboard featuring live extraction, evaluation metrics, and system health status.
 
 ---
 
@@ -48,7 +43,7 @@ Follow these steps to set up and run the platform locally on your machine:
 ### 1. Clone the Repository
 
 ```bash
-git clone [https://github.com/YOUR_USERNAME/cti-platform.git](https://github.com/YOUR_USERNAME/cti-platform.git)
+git clone https://github.com/YOUR_USERNAME/cti-platform.git
 cd cti-platform
 
 ```
@@ -160,7 +155,3 @@ python -m pytest tests -q
 ## 🛡️ License
 
 This project is developed for academic and operational cybersecurity research. Feel free to fork and customize.
-
-```
-
-```
