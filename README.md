@@ -1,3 +1,4 @@
+
 # CTI Security Intelligence Platform
 
 A standalone and local-first intelligence platform designed to extract, enrich, and map Indicators of Compromise (IoCs) from unstructured Cyber Threat Intelligence (CTI) reports (Arabic/English). It features a trainable Conditional Random Fields (CRF) NER model, MITRE ATT&CK integration, STIX 2.1 exporting, and a dark CAD-styled Arabic web dashboard.
